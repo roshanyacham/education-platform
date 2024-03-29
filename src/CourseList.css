@@ -1,0 +1,211 @@
+/* CourseList.css */
+
+.course-list-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+
+  .course-list-container h2.course-list-heading {
+    font-size: 36px; /* Increase font size */
+    font-family: Arial, sans-serif; /* Change font family */
+  }
+  
+  .course-list-heading {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .program-section {
+    margin-bottom: 30px; /* Add space between sections */
+  }
+  
+  .program-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .course-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .course-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px; /* Set width for consistency */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .course-card:hover {
+    transform: scale(1.05); /* Scale up on hover */
+    transition: transform 0.3s ease; /* Smooth transition */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+  }
+  /* CourseList.css */
+
+.course-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.course-image {
+  max-width: 100%; /* Ensure the image doesn't exceed the container width */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 8px; /* Optional: Add rounded corners */
+}
+
+  
+  .course-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .course-description {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .course-price {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .enroll-button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .enroll-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .enroll-button:focus {
+    outline: none;
+    transform: scale(1.05);
+  }
+  
+  /* Adjusting the size of program boxes */
+  .program-category {
+    width: 300px;
+    margin: 10px;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Adjusting the size of the search bar */
+  .search-bar {
+    margin-bottom: 20px;
+  }
+  
+  .search-bar input[type="text"] {
+    width: 50%; /* Medium size */
+    padding: 10px;
+    font-size: 16px; /* Medium size */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  .filter-option {
+    display: inline-block;
+  }
+  
+  .filter-option select {
+    width: 200px; /* Adjust width as needed */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 20px; /* Add margin-right for spacing */
+    appearance: none; /* Remove default appearance */
+    -webkit-appearance: none; /* Remove default appearance for Safari */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6.293 7.293a1 1 0 011.414 0L10 9.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414zM10 4a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/></svg>'); /* Custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px; /* Size of arrow icon */
+  }
+  
+  .filter-option select:hover,
+  .filter-option select:focus {
+    border-color: #007bff; /* Highlight on hover/focus */
+  }
+  
+  /* Styling for dropdown arrow */
+  .filter-option select::-ms-expand {
+    display: none; /* Hide default arrow in IE */
+  }
+  
+  /* Adjust the size of medium filter option box */
+  .filter-option.medium select {
+    width: 250px; /* Medium size */
+  }
+  body {
+    background-image: url('https://media.istockphoto.com/id/1167863983/vector/horizontal-vector-illustration-of-an-empty-light-blue-grungy-textured-background.jpg?s=612x612&w=0&k=20&c=AgBWyrJP5O0GlKOGwzO5IXl6NrspMIR7q1Z7kYq8YsI='); /* Adjust the path to your image */
+    background-size: cover; /* Cover the entire viewport */
+    background-position: center; /* Center the background image */
+    background-attachment: fixed; /* Fixed positioning */
+    margin: 0; /* Remove default body margin */
+    padding: 0; /* Remove default body padding */
+    height: 100vh; /* Ensure the background takes up the entire viewport height */
+  }
+  /* CourseList.css */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-body {
+  flex-grow: 1;
+}
+
+.card-img-top {
+  object-fit: cover;
+  height: 300px; /* Adjust as needed */
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .card-img-top {
+    height: 200px; /* Adjust as needed */
+  }
+}
+/* Styling for the search button */
+.search-button {
+  background-color: #28a745; /* Green color */
+  color: #ffffff; /* White text color */
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #218838; /* Darker green color on hover */
+}
+
+.search-button:focus {
+  outline: none;
+  transform: scale(1.05);
+}
+

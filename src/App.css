@@ -1,6 +1,10 @@
 .App {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0px; /* Adjust the gap between grid items */
   text-align: center;
 }
+
 
 .App-logo {
   height: 40vmin;
@@ -36,3 +40,37 @@
     transform: rotate(360deg);
   }
 }
+/* Styling for the search button */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.filter-option {
+  margin: 10px;
+  flex: 1 1 auto; /* Allow filters to grow but don't force them to be the same size */
+  max-width: 300px; /* Limit the maximum width of each filter */
+  text-align: left; /* Ensure text alignment is consistent */
+}
+
+.filter-option select,
+.filter-option input[type="date"] {
+  width: 100%; /* Make sure select and input elements fill their containers */
+}
+
+/* Adjustments for smaller screens */
+@media screen and (max-width: 768px) {
+  .filter-option {
+    flex-basis: 100%; /* Make filters take full width on smaller screens */
+    margin: 5px 0;
+  }
+}
+
+/* Additional adjustments for even smaller screens */
+@media screen and (max-width: 480px) {
+  .filter-option {
+    max-width: none; /* Remove maximum width restriction for smaller screens */
+  }
+}
+
