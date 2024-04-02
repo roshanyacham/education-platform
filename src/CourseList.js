@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './CourseList.css';
 
 function CourseList({ filters, searchQuery }) {
-  const [courses, setCourses] = useState([
+  const [courses] = useState([
     {
       id: 1,
       title: 'Introduction to React',
@@ -80,7 +80,8 @@ function CourseList({ filters, searchQuery }) {
   const filteredCourses = courses.filter(course =>
     course.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
     (filters.subjectArea === '' || course.program === filters.subjectArea) &&
-    (filters.duration === '' || course.duration === filters.duration) &&
+    // Check if the course duration matches the selected duration filter
+    (filters.duration === '' || course.duration.toLowerCase() === filters.duration.toLowerCase()) &&
     (!filters.startDate || new Date(course.startDate) >= new Date(filters.startDate))
   );
 
