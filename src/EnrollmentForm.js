@@ -1,11 +1,9 @@
-// EnrollmentForm.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 function EnrollmentForm() {
   const { courseTitle } = useParams(); // Access courseTitle from URL parameters
 
-  // Initialize form data with empty values
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -17,24 +15,25 @@ function EnrollmentForm() {
   });
 
   const [formSubmitted, setFormSubmitted] = useState(false); // State to track form submission
+  const [applicationNumber, setApplicationNumber] = useState('');
+
+  useEffect(() => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear().toString().slice(-2);
+    const month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
+    const day = ('0' + currentDate.getDate()).slice(-2);
+    const position = localStorage.getItem('applicationPosition');
+    const applicationDate = `${year}${month}${day}`;
+    setApplicationNumber(`KH${applicationDate}${position}`);
+    
+    // Fetch the position of the application from the server or local storage and update the state
+    if (position) {
+      // setPosition(parseInt(position)); // Removed as it's not used
+    }
+  }, []);
 
   const handleChange = e => {
     const { name, value } = e.target;
-
-    // Validation for full name (only alphabets)
-    if (name === 'fullName' && value !== '' && !/^[a-zA-Z ]+$/.test(value)) {
-      alert('Full Name should contain only alphabets.');
-      return;
-    }
-
-    // Validation for phone number (only numbers and length equal to 10)
-    if (name === 'phone' && value.length === 10) {
-      const isValid = /^[0-9]{10}$/g.test(value);
-      if (!isValid) {
-        alert('Mobile number should be a 10-digit number.');
-        return;
-      }
-    }
     setFormData({ ...formData, [name]: value });
   };
 
@@ -67,6 +66,16 @@ function EnrollmentForm() {
         </div>
       ) : (
         <form onSubmit={handleSubmit}>
+          {/* Application Details */}
+          <fieldset>
+            <legend className="text-left">Application Details</legend>
+            <div className="row mb-3">
+              <div className="col">
+                <label htmlFor="applicationNumber" className="form-label">Application Number</label>
+                <input type="text" className="form-control" id="applicationNumber" name="applicationNumber" value={applicationNumber} readOnly />
+              </div>
+            </div>
+          </fieldset>
           {/* Personal Details */}
           <fieldset>
             <legend className="text-left">Personal Details</legend>
