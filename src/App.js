@@ -1,9 +1,9 @@
-// App.js
 import React, { useState } from 'react';
 import './App.css';
 import CourseList from './CourseList';
 import EnrollmentForm from './EnrollmentForm';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Success from './Success'; // Import the Success component
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 function App() {
   const [filters, setFilters] = useState({
@@ -27,14 +27,14 @@ function App() {
       <div className="App">
         <header>
           <h1>Knowledge Hub</h1>
+          {/* Home Button */}
+          <Link to="/" className="home-button">Home</Link>
         </header>
         <main>
           <Routes>
-            {/* Define routes for CourseList and EnrollmentForm */}
-            <Route
-              path="/enroll/:courseId/:courseTitle"
-              element={<EnrollmentForm />}
-            />
+            {/* Define routes for CourseList, EnrollmentForm, and Success */}
+            <Route path="/enroll/:courseId/:courseTitle" element={<EnrollmentForm />} />
+            <Route path="/success" element={<Success />} /> {/* Add this route */}
             <Route
               path="/"
               element={

@@ -48,7 +48,7 @@ function EnrollmentForm() {
       });
 
       console.log('Form data submitted successfully');
-      // Optionally, you can redirect the user to a success page or perform any other action here
+      window.location.href = '/success'; // Redirect to success page after form submission
     } catch (error) {
       console.error('Error submitting form data:', error);
       // Handle errors (e.g., display an error message to the user)
@@ -56,6 +56,7 @@ function EnrollmentForm() {
   };
 
   return (
+    
     <div className="container">
       <h2 className="my-4">Enrollment Form for {courseTitle}</h2>
       <form onSubmit={handleSubmit}>
