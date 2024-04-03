@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-
-
 function EnrollmentForm() {
   const { courseTitle } = useParams(); // Access courseTitle from URL parameters
 
@@ -39,43 +37,23 @@ function EnrollmentForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
-      // Construct CSV content
-      const csvContent = [
-        Object.keys(formData).join(','), // Headers
-        Object.values(formData).map(value => "${value}").join(',') // Values
-      ].join('\n');
-  
-      // Create a Blob containing the CSV data
-      const blob = new Blob([csvContent], { type: 'text/csv' });
-  
-      // Create a URL for the Blob
-      const url = window.URL.createObjectURL(blob);
-  
-      // Create a temporary link element
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'enrollment_data.csv');
-  
-      // Simulate a click to trigger the download
-      document.body.appendChild(link);
-      link.click();
-  
-      // Cleanup
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-  
-      console.log('CSV file generated successfully');
+      await fetch('http://localhost:3001/save-form-data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      console.log('Form data submitted successfully');
+      // Optionally, you can redirect the user to a success page or perform any other action here
     } catch (error) {
-      console.error('Error:', error);
-      // Add code to handle errors (e.g., display an error message to the user)
+      console.error('Error submitting form data:', error);
+      // Handle errors (e.g., display an error message to the user)
     }
   };
-  
-  
-  
-  
 
   return (
     <div className="container">
