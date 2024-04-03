@@ -1,9 +1,12 @@
+// CourseList.js
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './CourseList.css';
+import { useNavigate } from 'react-router-dom'; // Import withRouter
 
-function CourseList({ filters, searchQuery }) {
+function CourseList({ filters, searchQuery, history }) {
   const [courses] = useState([
+    // Course data
     {
       id: 1,
       title: 'Introduction to React',
@@ -74,13 +77,13 @@ function CourseList({ filters, searchQuery }) {
       startDate: '2024-07-15',
       image: 'https://skillfine.com/wp-content/uploads/2023/03/4.jpg'
     }
+    // Add more courses as needed
   ]);
 
   // Filter courses based on search query and filters
   const filteredCourses = courses.filter(course =>
     course.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
     (filters.subjectArea === '' || course.program === filters.subjectArea) &&
-    // Check if the course duration matches the selected duration filter
     (filters.duration === '' || course.duration.toLowerCase() === filters.duration.toLowerCase()) &&
     (!filters.startDate || new Date(course.startDate) >= new Date(filters.startDate))
   );
@@ -93,7 +96,14 @@ function CourseList({ filters, searchQuery }) {
     return acc;
   }, {});
 
+  const navigate = useNavigate(); // Use useNavigate hook to access the history object
+
+  const handleEnroll = (courseId, courseTitle) => {
+    navigate(`/enroll/${courseId}/${courseTitle}`); // Pass course title as URL parameter
+  };
+
   return (
+    // Course list rendering logic
     <div className="container">
       <h2 className="text-center my-4">Available Courses</h2>
       {Object.keys(groupedCourses).map(program => (
@@ -107,7 +117,8 @@ function CourseList({ filters, searchQuery }) {
                   <h5 className="card-title">{course.title}</h5>
                   <p className="card-text">{course.description}</p>
                   <p className="card-text">Price: ₹{course.price}</p>
-                  <button className="btn btn-primary">Enroll</button>
+                  {/* Button to enroll */}
+                  <button onClick={() => handleEnroll(course.id, course.title)} className="btn btn-primary">Enroll</button>
                 </div>
               </div>
             </div>
