@@ -14,7 +14,7 @@ function CourseList({ filters, searchQuery, history }) {
       price: 4999,
       duration: 'short',
       program: 'IT Software',
-      startDate: '2024-06-15',
+      startDate: '2024-04-20',
       image: 'https://miro.medium.com/v2/resize:fit:1200/1*y6C4nSvy2Woe0m7bWEn4BA.png'
     },
     {
@@ -52,7 +52,7 @@ function CourseList({ filters, searchQuery, history }) {
       title: 'World History: A Comprehensive Overview',
       description: 'Exploration of world history from ancient to modern times',
       price: 3899,
-      duration: 'short',
+      duration: 'long',
       program: 'Humanities',
       startDate: '2024-11-10',
       image: 'https://play-lh.googleusercontent.com/FSi-XkZeIKie6wtu4tm_tQGKbuYPANOoHmhM85Gp9NdjtIhlAV5ug7EKllaw3nSFMRUa'
@@ -64,7 +64,7 @@ function CourseList({ filters, searchQuery, history }) {
       price: 7099,
       duration: 'medium',
       program: 'Sciences',
-      startDate: '2024-08-25',
+      startDate: '2024-05-25',
       image: 'https://th-org.s3.amazonaws.com/images/marketplace/cover_photos/8911c522-af75-4b42-809b-f47ed0713308/Fundamentals_of_Biology_-_Mehrotra.png'
     },
     {
@@ -76,8 +76,65 @@ function CourseList({ filters, searchQuery, history }) {
       program: 'Statistics',
       startDate: '2024-07-15',
       image: 'https://skillfine.com/wp-content/uploads/2023/03/4.jpg'
-    }
-    // Add more courses as needed
+    },
+
+    {
+      id: 8,
+      title: 'Advanced Statistical Analysis',
+      description: 'In-depth study of advanced statistical methods and tools',
+      price: 8999,
+      duration: 'medium',
+      program: 'Statistics',
+      startDate: '2024-06-20',
+      image: 'https://m.media-amazon.com/images/I/61UbS2jRLUL._AC_UF1000,1000_QL80_.jpg'
+    },
+    {
+      id: 9,
+      title: 'Fundamentals of Physics',
+      description: 'Basic principles of physics covering mechanics, thermodynamics, and electromagnetism',
+      price: 6499,
+      duration: 'short',
+      program: 'Sciences',
+      startDate: '2024-07-10',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv5eTV29IEA59vcrWfJ2wYoKQrGNo1UL44xHCdjzKqHw&s'
+    },
+    // For Statistics
+{
+  id: 10,
+  title: 'Regression Analysis',
+  description: 'Detailed study of regression analysis techniques and applications',
+  price: 7999,
+  duration: 'long',
+  program: 'Statistics',
+  startDate: '2024-08-15',
+  image: 'https://cdn2.percipio.com/public/c/books/117499/cover-images/7364ec04-ef7f-4ee4-a95d-91bd9aa42589/modality/7364ec04-ef7f-4ee4-a95d-91bd9aa42589.jpg?width=400'
+},
+
+
+{
+  id: 11,
+  title: 'Chemistry Essentials',
+  description: 'Comprehensive course covering essential concepts of chemistry',
+  price: 5699,
+  duration: 'medium',
+  program: 'Sciences',
+  startDate: '2024-09-01',
+  image: 'https://m.media-amazon.com/images/I/51KpQ-INmHL._AC_UF1000,1000_QL80_.jpg'
+},
+
+// For Humanities
+{
+  id: 12,
+  title: 'Literature Appreciation',
+  description: 'Exploration and analysis of classic and contemporary literature',
+  price: 4499,
+  duration: 'short',
+  program: 'Humanities',
+  startDate: '2024-09-20',
+  image: 'https://m.media-amazon.com/images/I/61i9iU-qJsL._AC_UF1000,1000_QL80_.jpg'
+}
+
+    
   ]);
 
   // Filter courses based on search query and filters
