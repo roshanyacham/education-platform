@@ -27,19 +27,13 @@ function EnrollmentForm() {
     }
 
     // Validation for phone number (only numbers and length equal to 10)
-    if (name === 'phone' && value !== '') {
-        // Combined validation (prevents empty string submission and allows specific formats)
-        const isValid = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g.test(value); // Allows only 10 digits
-        // OR (optional)
-        // const isValid = /^\d{10,12}$/.test(value); // Allows 10 or 11 digits (including country code)
-        if (!isValid) {
-          alert('Mobile number should be a 10-digit number.'); // Adjust message for your region
-          return;
-        }
+    if (name === 'phone' && value.length === 10) {
+      const isValid = /^[0-9]{10}$/g.test(value);
+      if (!isValid) {
+        alert('Mobile number should be a 10-digit number.');
+        return;
+      }
     }
-
-      
-
     setFormData({ ...formData, [name]: value });
   };
 
@@ -47,27 +41,38 @@ function EnrollmentForm() {
     e.preventDefault();
   
     try {
-      const response = await fetch('/save-form-data', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      // Construct CSV content
+      const csvContent = [
+        Object.keys(formData).join(','), // Headers
+        Object.values(formData).map(value => "${value}").join(',') // Values
+      ].join('\n');
   
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Form data saved successfully:', data);
-        // Add code to handle success (e.g., display a success message to the user)
-      } else {
-        console.error('Failed to save form data:', response.statusText);
-        // Add code to handle failure (e.g., display an error message to the user)
-      }
+      // Create a Blob containing the CSV data
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+  
+      // Create a URL for the Blob
+      const url = window.URL.createObjectURL(blob);
+  
+      // Create a temporary link element
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'enrollment_data.csv');
+  
+      // Simulate a click to trigger the download
+      document.body.appendChild(link);
+      link.click();
+  
+      // Cleanup
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+  
+      console.log('CSV file generated successfully');
     } catch (error) {
       console.error('Error:', error);
-      // Add code to handle network errors (e.g., display an error message to the user)
+      // Add code to handle errors (e.g., display an error message to the user)
     }
   };
+  
   
   
   
