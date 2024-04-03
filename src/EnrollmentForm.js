@@ -11,6 +11,7 @@ function EnrollmentForm() {
     qualification: '',
     degreeType: '', // Added for graduation degree type
     qualificationScore: '',
+    courseName: courseTitle, // Set course name to the URL parameter courseTitle
     statementOfPurpose: ''
   });
 
@@ -39,16 +40,21 @@ function EnrollmentForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
+      const formDataWithAppNumber = { ...formData, applicationNumber }; // Include applicationNumber
       await fetch('http://localhost:3001/save-form-data', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formDataWithAppNumber), // Send formDataWithAppNumber instead of formData
       });
-
+  
+      // Increment the application position and save it back to localStorage
+      const newPosition = parseInt(localStorage.getItem('applicationPosition') || '0') + 1;
+      localStorage.setItem('applicationPosition', newPosition.toString());
+  
       console.log('Form data submitted successfully');
       setFormSubmitted(true); // Set formSubmitted to true upon successful submission
     } catch (error) {
@@ -56,7 +62,7 @@ function EnrollmentForm() {
       // Handle errors (e.g., display an error message to the user)
     }
   };
-
+  
   return (
     <div className="container">
       <h2 className="my-4">Enrollment Form for {courseTitle}</h2>
@@ -118,6 +124,16 @@ function EnrollmentForm() {
               <div className="col">
                 <label htmlFor="qualificationScore" className="form-label">Qualification Score</label>
                 <input type="number" step="0.1" min="5" max="10" className="form-control" id="qualificationScore" name="qualificationScore" value={formData.qualificationScore} onChange={handleChange} required />
+              </div>
+            </div>
+          </fieldset>
+          {/* Course Name */}
+          <fieldset>
+            <legend className="text-left">Course Name</legend>
+            <div className="row mb-3">
+              <div className="col">
+                <label htmlFor="courseName" className="form-label">Course Name</label>
+                <input type="text" className="form-control" id="courseName" name="courseName" value={formData.courseName} readOnly />
               </div>
             </div>
           </fieldset>
