@@ -27,9 +27,10 @@ function App() {
       <div className="App">
         <header>
           <h1>Knowledge Hub</h1>
-          {/* Home Button */}
-          <Link to="/" className="home-button">Home</Link>
+         
         </header>
+         {/* Home Button */}
+         <Link to="/" className="home-button">Home</Link>
         <main>
           <Routes>
             {/* Define routes for CourseList, EnrollmentForm, and Success */}
