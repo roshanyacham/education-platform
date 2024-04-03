@@ -17,20 +17,17 @@ function EnrollmentForm() {
 
   const [formSubmitted, setFormSubmitted] = useState(false); // State to track form submission
   const [applicationNumber, setApplicationNumber] = useState('');
+  const [applicationPosition, setApplicationPosition] = useState(0);
 
   useEffect(() => {
     const currentDate = new Date();
     const year = currentDate.getFullYear().toString().slice(-2);
     const month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
     const day = ('0' + currentDate.getDate()).slice(-2);
-    const position = localStorage.getItem('applicationPosition');
+    let position = parseInt(localStorage.getItem('applicationPosition') || '0');
     const applicationDate = `${year}${month}${day}`;
     setApplicationNumber(`KH${applicationDate}${position}`);
-    
-    // Fetch the position of the application from the server or local storage and update the state
-    if (position) {
-      // setPosition(parseInt(position)); // Removed as it's not used
-    }
+    setApplicationPosition(position);
   }, []);
 
   const handleChange = e => {
@@ -52,7 +49,7 @@ function EnrollmentForm() {
       });
   
       // Increment the application position and save it back to localStorage
-      const newPosition = parseInt(localStorage.getItem('applicationPosition') || '0') + 1;
+      const newPosition = applicationPosition + 1;
       localStorage.setItem('applicationPosition', newPosition.toString());
   
       console.log('Form data submitted successfully');

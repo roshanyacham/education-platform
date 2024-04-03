@@ -3,6 +3,7 @@ const fs = require('fs');
 const csvWriter = require('csv-writer').createObjectCsvWriter;
 const csvParser = require('csv-parser');
 const cors = require('cors');
+const nodemailer = require('nodemailer'); // Import nodemailer
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -59,6 +60,36 @@ const writeDataToCSV = async (formData) => {
   }
 };
 
+// Function to send email
+const sendEmail = async (formData) => {
+  try {
+    // Create a nodemailer transporter
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'lalithahari2002@gmail.com', // Replace with your email
+        pass: 'wqmx pdta gjke vgdi' // Replace with your password
+      }
+    });
+
+    // Define email content
+    let mailOptions = {
+      from: 'lalithahari2002@gmail.com',
+      to: formData.email,
+      subject: 'Enrollment Form Submission Confirmation',
+      text: `Dear ${formData.fullName},\n\nThank you for submitting the enrollment form. Your application has been received.\n\nBest regards,\nYour Institution`
+    };
+
+    // Send email
+    await transporter.sendMail(mailOptions);
+    console.log("Email sent successfully.");
+    return true;
+  } catch (error) {
+    console.error('Error sending email:', error);
+    return false;
+  }
+};
+
 app.post('/save-form-data', async (req, res) => {
   try {
     const { fullName, email, phone, qualification, degreeType, qualificationScore, statementOfPurpose } = req.body;
@@ -67,7 +98,10 @@ app.post('/save-form-data', async (req, res) => {
     const success = await writeDataToCSV(formData);
 
     if (success) {
-      res.json({ success: true, message: 'Form data saved successfully.' });
+      // Send email after saving form data
+      await sendEmail(formData);
+      
+      res.json({ success: true, message: 'Form data saved successfully and email sent.' });
     } else {
       res.status(500).json({ success: false, message: 'Failed to save form data.' });
     }
