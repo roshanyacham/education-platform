@@ -37,9 +37,10 @@ const writeDataToCSV = async (formData) => {
     const existingData = await readExistingData();
     existingData.push(formData);
 
-    const csvWriterInstance = csvWriter({ 
+    const csvWriterInstance = csvWriter({
       path: csvFilePath,
       header: [
+        { id: 'applicationNumber', title: 'Application Number' }, // Add applicationNumber to header
         { id: 'fullName', title: 'Full Name' },
         { id: 'email', title: 'Email' },
         { id: 'phone', title: 'Phone' },
@@ -60,6 +61,7 @@ const writeDataToCSV = async (formData) => {
   }
 };
 
+
 // Function to send email
 const sendEmail = async (formData) => {
   try {
@@ -77,7 +79,7 @@ const sendEmail = async (formData) => {
       from: 'lalithahari2002@gmail.com',
       to: formData.email,
       subject: 'Enrollment Form Submission Confirmation',
-      text: `Dear ${formData.fullName},\n\nThank you for submitting the enrollment form. Your application has been received.\n\nBest regards,\nYour Institution`
+      text: `Dear ${formData.fullName},\n\nThank you for submitting the enrollment form. Your application has been received.Your application number is ${formData.applicationNumber}.We will let you know your application status within 4 working days. \n\nBest regards,\nKnowledge Hub Team`
     };
 
     // Send email
@@ -90,17 +92,18 @@ const sendEmail = async (formData) => {
   }
 };
 
+// Modify the endpoint handler to receive applicationNumber
 app.post('/save-form-data', async (req, res) => {
   try {
-    const { fullName, email, phone, qualification, degreeType, qualificationScore, statementOfPurpose } = req.body;
-    const formData = { fullName, email, phone, qualification, degreeType, qualificationScore, statementOfPurpose };
+    const { fullName, email, phone, qualification, degreeType, qualificationScore, statementOfPurpose, applicationNumber } = req.body; // Extract applicationNumber
+    const formData = { applicationNumber, fullName, email, phone, qualification, degreeType, qualificationScore, statementOfPurpose }; // Include applicationNumber in formData
 
     const success = await writeDataToCSV(formData);
 
     if (success) {
       // Send email after saving form data
       await sendEmail(formData);
-      
+
       res.json({ success: true, message: 'Form data saved successfully and email sent.' });
     } else {
       res.status(500).json({ success: false, message: 'Failed to save form data.' });
@@ -111,6 +114,7 @@ app.post('/save-form-data', async (req, res) => {
   }
 });
 
+// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
