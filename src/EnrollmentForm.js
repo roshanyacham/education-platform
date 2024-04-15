@@ -3,6 +3,11 @@ import { useParams } from 'react-router-dom';
 
 function EnrollmentForm() {
   const { courseTitle } = useParams(); // Access courseTitle from URL parameters
+  const [courseName, setCourseName] = useState(''); // Add courseName state variable
+  useEffect(() => {
+    setCourseName(courseTitle); // Set courseName when courseTitle changes
+  }, [courseTitle]);
+
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -39,7 +44,8 @@ function EnrollmentForm() {
     e.preventDefault();
   
     try {
-      const formDataWithAppNumber = { ...formData, applicationNumber }; // Include applicationNumber
+      const formDataWithAppNumber = { ...formData, applicationNumber, courseName };
+ // Include applicationNumber and courseName
       await fetch('http://localhost:3001/save-form-data', {
         method: 'POST',
         headers: {
@@ -59,6 +65,7 @@ function EnrollmentForm() {
       // Handle errors (e.g., display an error message to the user)
     }
   };
+  
   
   
   

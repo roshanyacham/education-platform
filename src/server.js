@@ -40,14 +40,15 @@ const writeDataToCSV = async (formData) => {
     const csvWriterInstance = csvWriter({
       path: csvFilePath,
       header: [
-        { id: 'applicationNumber', title: 'Application Number' }, // Add applicationNumber to header
+        { id: 'applicationNumber', title: 'Application Number' },
         { id: 'fullName', title: 'Full Name' },
         { id: 'email', title: 'Email' },
         { id: 'phone', title: 'Phone' },
         { id: 'qualification', title: 'Qualification' },
         { id: 'degreeType', title: 'Degree Type' },
         { id: 'qualificationScore', title: 'Qualification Score' },
-        { id: 'statementOfPurpose', title: 'Statement of Purpose' }
+        { id: 'statementOfPurpose', title: 'Statement of Purpose' },
+        { id: 'courseName', title: 'Course Name' } // Add courseName to header
       ],
       append: true // Append new data to existing file
     });
@@ -60,7 +61,6 @@ const writeDataToCSV = async (formData) => {
     return false;
   }
 };
-
 
 // Function to send email
 const sendEmail = async (formData) => {
@@ -79,7 +79,7 @@ const sendEmail = async (formData) => {
       from: 'lalithahari2002@gmail.com',
       to: formData.email,
       subject: 'Enrollment Form Submission Confirmation',
-      text: `Dear ${formData.fullName},\n\nThank you for submitting the enrollment form. Your application has been received. Your application number is ${formData.applicationNumber}. We will let you know your application status within 4 working days. \n\nBest regards,\nKnowledge Hub Team`
+      text: `Dear ${formData.fullName},\n\nThank you for submitting the enrollment form. Your application for the course ${formData.courseName} has been received. Your application number is ${formData.applicationNumber}. We will let you know your application status within 4 working days. \n\nBest regards,\nKnowledge Hub Team`
     };
 
     // Send email
@@ -92,13 +92,12 @@ const sendEmail = async (formData) => {
   }
 };
 
-
-// Modify the endpoint handler to receive applicationNumber
+// Endpoint to save form data
 app.post('/save-form-data', async (req, res) => {
   try {
-    const { fullName, email, phone, qualification, degreeType, qualificationScore, statementOfPurpose } = req.body;
-    const { applicationNumber } = req.body; // Extract applicationNumber
-    const formData = { applicationNumber, fullName, email, phone, qualification, degreeType, qualificationScore, statementOfPurpose };
+    const { fullName, email, phone, qualification, degreeType, qualificationScore, statementOfPurpose, courseName } = req.body;
+    const { applicationNumber } = req.body;
+    const formData = { applicationNumber, fullName, email, phone, qualification, degreeType, qualificationScore, statementOfPurpose, courseName }; // Include courseName in formData
 
     const success = await writeDataToCSV(formData);
 
