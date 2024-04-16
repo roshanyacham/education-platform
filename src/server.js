@@ -6,6 +6,7 @@ const cors = require('cors');
 const nodemailer = require('nodemailer'); // Import nodemailer
 const app = express();
 const PORT = process.env.PORT || 3001;
+const bcrypt = require('bcrypt');
 
 app.use(express.json());
 app.use(cors());
@@ -91,6 +92,81 @@ const sendEmail = async (formData) => {
     return false;
   }
 };
+
+// In-memory storage for registered users (limited and not secure)
+let registeredUsers = {};
+
+// Function to register a new user
+const registerUser = async (userData) => {
+  try {
+    const { username, password } = userData;
+
+    // Check if username already exists
+    if (registeredUsers[username]) {
+      return { success: false, message: 'Username already exists' };
+    }
+
+    // Hash the password before storing it
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    // Store username and hashed password in memory
+    registeredUsers[username] = hashedPassword;
+
+    console.log('User registered successfully.');
+    return { success: true, message: 'Registration successful' };
+  } catch (error) {
+    console.error('Error registering user:', error);
+    return { success: false, message: 'Registration failed' };
+  }
+};
+
+// Function to login a user
+const loginUser = async (userData) => {
+  try {
+    const { username, password } = userData;
+
+    // Check if username exists
+    if (!registeredUsers[username]) {
+      return { success: false, message: 'Invalid username or password' };
+    }
+
+    // Compare entered password with hashed password
+    const isPasswordValid = await bcrypt.compare(password, registeredUsers[username]);
+
+    if (isPasswordValid) {
+      console.log('User logged in successfully.');
+      return { success: true, message: 'Login successful' };
+    } else {
+      return { success: false, message: 'Invalid username or password' };
+    }
+  } catch (error) {
+    console.error('Error logging in user:', error);
+    return { success: false, message: 'Login failed' };
+  }
+};
+
+// ... other routes for your application ...
+
+app.post('/register', async (req, res) => {
+  const registrationResponse = await registerUser(req.body);
+  if (registrationResponse.success) {
+    // Redirect to login page after successful registration
+    res.redirect('/login');  // Option 1: Using res.redirect
+    // OR
+    // res.send(`<html><head><meta http-equiv="refresh" content="0; url=login.html"></head></body></html>`); // Option 2: Sending redirect HTML
+  } else {
+    // Handle registration failure (e.g., send error message)
+    res.json(registrationResponse);
+  }
+});
+
+app.post('/login', async (req, res) => {
+  const loginResponse = await loginUser(req.body);
+  res.json(loginResponse);
+});
+
+
 
 // Endpoint to save form data
 app.post('/save-form-data', async (req, res) => {
