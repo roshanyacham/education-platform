@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import './App.css';
 import CourseList from './CourseList';
 import EnrollmentForm from './EnrollmentForm';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 function App() {
   const [filters, setFilters] = useState({
@@ -27,6 +27,10 @@ function App() {
       <div className="App">
         <header>
           <h1>Knowledge Hub</h1>
+          {/* Home button */}
+          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <button className="home-button">Home</button>
+          </Link>
         </header>
         <main>
           <Routes>
