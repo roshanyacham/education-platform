@@ -26,11 +26,13 @@ function App() {
     <Router>
       <div className="App">
         <header>
-          <h1> Knowledge Hub<Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-                      <button className="home-button">Home</button>
-                  </Link></h1>
+          <h1>Knowledge Hub </h1>
+          {/* Home button */}
         </header>
         <main>
+        <Link to="/">
+            <button className="home-button">Home</button>
+          </Link>
           <Routes>
             {/* Define routes for CourseList and EnrollmentForm */}
             <Route
@@ -46,7 +48,7 @@ function App() {
                       type="text"
                       placeholder="Search courses..."
                       style={{
-                        width: '80%',
+                        width: '70%',
                         padding: '8px',
                         borderRadius: '4px',
                         marginRight: '8px',
