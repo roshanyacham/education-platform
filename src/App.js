@@ -26,11 +26,9 @@ function App() {
     <Router>
       <div className="App">
         <header>
-          <h1>Knowledge Hub</h1>
-          {/* Home button */}
-          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <button className="home-button">Home</button>
-          </Link>
+          <h1> Knowledge Hub<Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+                      <button className="home-button">Home</button>
+                  </Link></h1>
         </header>
         <main>
           <Routes>
